@@ -10,15 +10,12 @@ dotenv.load_dotenv()
 BASE_URL = os.getenv('BASE_URL_DEV2')
 
 
-@allure.title(" POST Создание нового материалы без кромки")
-@allure.testcase(
-    'https://team-0pkc.testit.software/projects/1/tests/3?isolatedSection=7cfd3124-54cb-490c-a03e-1a37ca875bd9',
-    '3') # Ссылка на NTestIT
-def test_post_greate_mat():
+
+def post_greate_mat():
     # без кромки новый материал
     payload = {
-        "ext_id": "940d86c7-7ad2-4b42-b304-e1444b941d82",
-        "ext_num": "18125",
+        "ext_id": "datatest-7ad2-4b42-b304-e1444b941d82",
+        "ext_num": "18129",
         "name": "18decemb",
         "depth": 1,
         "length": 1,
@@ -29,20 +26,26 @@ def test_post_greate_mat():
         "edge_material_ext_ids": []
     }
     response = requests.post(f"{BASE_URL}/api/materials/", json=payload)
-    print(response)
+    return response
 
+
+def get_by_ext_num(ext_num):
+    # проверка, что материал создан
+    response = requests.get(f"{BASE_URL}/api/materials/by_ext_num/?ext_num=ext_num")
+    return response
+
+@allure.title(" POST Создание нового материалы без кромки")
+@allure.testcase(
+    'https://team-0pkc.testit.software/projects/1/tests/3?isolatedSection=7cfd3124-54cb-490c-a03e-1a37ca875bd9',
+    '3') # Ссылка на NTestIT
+def test_post_greate_mat():
+    response = post_greate_mat()
     assert response.status_code == 200
     assert response.json()['result'] is True
-
-
-def test_get_by_ext_num():
-    # проверка, что материал создан
-    response = requests.get(f"{BASE_URL}/api/materials/by_ext_num/?ext_num='18125'")
+    get_by_ext_num('18129')
     assert response.status_code == 200
-    print(response)
 
-    # удаление из базы тестовой записи
-    #DB_SQL.delete_ext_num('materials','18124')
+
 
 def test_post_greate_mat_edge():
     # с кромкой новый материал
