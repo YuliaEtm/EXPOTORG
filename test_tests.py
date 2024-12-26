@@ -42,8 +42,8 @@ def test_post_greate_mat():
     response = post_greate_mat()
     assert response.status_code == 200
     assert response.json()['result'] is True
-    get_by_ext_num('18129')
-    assert response.status_code == 200
+    response1 = get_by_ext_num('18129')
+    assert response1.status_code == 200
 
 
 
@@ -66,7 +66,7 @@ def test_post_greate_mat_edge():
 
     assert response.status_code == 200
     assert response.json()['result'] is True
-# нужна проверка записи в таблицу material_item_edge ручной тест
+# нужна проверка записи в таблицу material_item_edge + удаление данных
 
 
 def test_post_greate_mat_not_existed_edge():
@@ -85,7 +85,7 @@ def test_post_greate_mat_not_existed_edge():
     }
     response = requests.post(f"{BASE_URL}/api/materials/", json=payload)
 
-    assert response.status_code == 404
+    assert response.status_code == 400
     assert response.json()['result'] is False
     print(response.json())
 
