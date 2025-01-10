@@ -132,7 +132,7 @@ payload_not_existed_texture = {
 }
 @testit.description('Создаем новый материал без заполненного поля "texture", проверяем отсутствие БД')
 def test_post_greate_mat_not_existed_texture():
-    #  Создание нового материала с несуществующей кромкой
+    #  Создание нового материала без заполненного поля "texture"
     with testit.step("создание нового"):
         response = requests.post(f"{BASE_URL}/api/materials/", json=payload_not_existed_texture)
         # проверка, что ответ 422
