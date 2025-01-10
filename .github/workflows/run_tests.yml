@@ -12,6 +12,7 @@ on:
           - smoke
           - regression
           - extended
+          - extended_failed
           - all
 
 #permissions: для отражения отчета сразу
@@ -48,6 +49,11 @@ jobs:
         if: "github.event.inputs.deployment_target == 'extended'"
         run: pytest -m extended --alluredir=allure-results
         continue-on-error: true
+      - name: run extended_failed tests
+        if: "github.event.inputs.deployment_target == 'extended_failed'"
+        run: pytest -m extended_failed --alluredir=allure-results
+        continue-on-error: true
+        
       - name: Install Java
         uses: actions/setup-java@v3
         with:
