@@ -35,6 +35,7 @@ payload = {
     }
 
 
+@pytest.mark.smoke
 @allure.description('Создаем новый материал без кромки, проверяем запись в БД, удаляем')
 def test_post_greate_mat():
     with allure.step("создание нового"):
@@ -67,6 +68,7 @@ payload_edge2 = {
     }
 
 
+@pytest.mark.regression
 @allure.description('Создаем новый материал с 2-мя кромками, проверяем запись в БД, удаляем')
 def test_post_greate_mat_edge():
 
@@ -103,7 +105,8 @@ payload_not_existed_edge = {
     }
 
 
-@allure.description('Создаем новый материал с кромкой отсутствующей в базе, проверяем запись в БД, удаляем')
+@pytest.mark.regression
+@allure.description('Создаем новый материал с кромкой отсутствующей в базе, проверяем запись в БД')
 def test_post_greate_mat_not_existed_edge():
 
     with allure.step("создание нового"):
@@ -132,6 +135,7 @@ payload_not_existed_texture = {
 }
 
 
+@pytest.mark.exteded_failed
 @allure.description('Создаем новый материал без заполненного поля "texture", проверяем отсутствие БД')
 def test_post_greate_mat_not_existed_texture():
 
@@ -139,7 +143,7 @@ def test_post_greate_mat_not_existed_texture():
         response = requests.post(f"{BASE_URL}/api/materials/", json=payload_not_existed_texture)
 
     with allure.step("проверка ошибки создания"):
-        assert response.status_code == 422, 'материал возможно создан без текстуры'
+        assert response.status_code == 420, 'материал возможно создан без текстуры'
 
     with allure.step(" GET проверка ошибки создания по ext_num в описании нет КОДА400"):
         response1 = get_by_ext_num(payload_not_existed_edge["ext_num"])
@@ -149,6 +153,7 @@ def test_post_greate_mat_not_existed_texture():
 texture = ['LONG_SIDE', 'SHORT_SIDE', 'WITHOUT_TEXTURE']
 
 
+@pytest.mark.exteded
 @allure.description("Создаем новый материал с полем  texture из ['LONG_SIDE', 'SHORT_SIDE', 'WITHOUT_TEXTURE']")
 @pytest.mark.parametrize('num', texture)
 def test_post_greate_mat_texture(num):
@@ -175,7 +180,6 @@ def test_post_greate_mat_texture(num):
     with allure.step(" GET проверка создания по ext_num"):
         response1 = get_by_ext_num(payload_texture["ext_num"])
         assert response1.status_code == 200, 'материал не найден'
-
 
     with allure.step("Удаление через подключение к БД и проверка выполнения"):
         DB_SQL2.db_deleted_param('materials', 'ext_num', payload_texture["ext_num"])
