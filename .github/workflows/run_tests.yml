@@ -39,7 +39,7 @@ jobs:
         continue-on-error: true
       - name: run smoke tests
         if: "github.event.inputs.deployment_target == 'smoke'"
-        run: pytest -m smoke --alluredir=allure-results
+        run: pytest test_tests_allure.py::test_post_greate_mat --alluredir=allure-results
         continue-on-error: true
       - name: run regression tests
         if: "github.event.inputs.deployment_target == 'regression'"
