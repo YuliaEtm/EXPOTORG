@@ -1,4 +1,4 @@
-name: Python autotests
+name: Python autotests in zip
 
 on:
   workflow_dispatch:
