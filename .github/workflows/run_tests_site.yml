@@ -71,7 +71,7 @@ jobs:
           #path: allure-report
           name: _site
           path: _site
-          retention-days: 7
+          retention-days: 1
   
   publish-report:
     runs-on: ubuntu-latest
