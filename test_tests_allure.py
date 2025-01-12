@@ -11,7 +11,7 @@ BASE_URL = os.getenv('BASE_URL_DEV2')
 
 def post_greate_mat(body):
     # создание нового материала
-    response = requests.post(f"{BASE_URL}/api/materials/", json=body)
+    response = requests.post(f"{os.getenv('BASE_URL_DEV2')}/api/materials/", json=body)
     return response
 
 
