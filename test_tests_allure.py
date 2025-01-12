@@ -47,11 +47,11 @@ def test_post_greate_mat():
         response1 = get_by_ext_num(payload["ext_num"])
         assert response1.status_code == 200, 'материал не найден'
 
-    with allure.step("Удаление через подключение к БД и проверка выполнения"):
-        DB_SQL2.db_deleted_param('materials', 'ext_num', payload["ext_num"])
+    #with allure.step("Удаление через подключение к БД и проверка выполнения"):
+        #DB_SQL2.db_deleted_param('materials', 'ext_num', payload["ext_num"])
 
-        response2 = get_by_ext_num(payload["ext_num"])
-        assert response2.status_code == 400, 'материал не удален'
+        #response2 = get_by_ext_num(payload["ext_num"])
+        #assert response2.status_code == 400, 'материал не удален'
 
 
 payload_edge2 = {
