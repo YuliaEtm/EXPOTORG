@@ -11,13 +11,13 @@ BASE_URL = os.getenv('BASE_URL_DEV2')
 
 def post_greate_mat(body):
     # создание нового материала
-    response = requests.post("http://192.168.21.3:8000/api/materials/", json=body)
+    response = requests.post(f"{BASE_URL}/api/materials/", json=body)
     return response
 
 
 def get_by_ext_num(ext_num):
     # проверка, что материал создан через Swagger по ext_num
-    response = requests.get(f"http://192.168.21.3:8000/api/materials/by_ext_num/?ext_num={ext_num}")
+    response = requests.get(f"{BASE_URL}/api/materials/by_ext_num/?ext_num={ext_num}")
     return response
 
 
