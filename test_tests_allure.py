@@ -21,6 +21,14 @@ def get_by_ext_num(ext_num):
     return response
 
 
+def get_by_id_ext_id(name_table, name_param, param):
+    # проверка, что материал создан через /api/tables
+    if name_param =="ext_id":
+        response = requests.get(f"{BASE_URL}/api/{name_table}//api/tables/?ext_id={param}")
+    else:
+        response = requests.get(f"{BASE_URL}/api/{name_table}//api/tables/?id={param}")
+    return response
+
 payload = {
     "ext_id": "datatest-7ad2-4b42-b304-e1444b941d82",
     "ext_num": "06011",
