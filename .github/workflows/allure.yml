@@ -1,0 +1,52 @@
+name: Automated tests ALLURE
+
+on:
+  push:
+  workflow_dispatch:
+    inputs:
+      ALLURE_JOB_RUN_ID: 
+      ALLURE_USERNAME: 
+
+env:
+  ALLURE_TOKEN: d12d4d78-1777-4386-b41a-2f6fcc0b6a3f
+  ALLURE_JOB_RUN_ID: ${{ github.event.inputs.ALLURE_JOB_RUN_ID }}
+  ALLURE_ENDPOINT: https://holzrobotics.testops.cloud/
+  ALLURE_PROJECT_ID: 68
+  ALLURE_RESULTS: allure-results
+  BASE_URL_TEST: ${{ vars.BASE_URL_TEST }}
+  HOST_POSTGRES_TEST: ${{ vars.HOST_POSTGRES_TEST }}
+  USER_POSTGRES_TEST: ${{ secrets.USER_POSTGRES_TEST }}
+  PASSWORD_POSTGRES_TEST: ${{ secrets.PASSWORD_POSTGRES_TEST }}
+  DATABASE_POSTGRES_TEST: ${{ vars.DATABASE_POSTGRES_TEST }}
+      
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+jobs:
+  
+  run-tests:
+    runs-on: ubuntu-22.04
+    
+
+    steps:
+      
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      - name: setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      
+      - name: install dependencies
+        run: pip install -r requirements.txt
+      - name: Install allurectl
+        uses: allure-framework/setup-allurectl@v1
+        with:
+          allure-endpoint: https://holzrobotics.testops.cloud/
+          allure-token: d12d4d78-1777-4386-b41a-2f6fcc0b6a3f
+          allure-project-id: 68
+      - name: run all tests        
+        run: allurectl watch -- pytest --alluredir=allure-results        
