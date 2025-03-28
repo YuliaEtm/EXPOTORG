@@ -29,7 +29,8 @@ jobs:
   
   run-tests:
     runs-on: ubuntu-22.04
-    
+    environment: prod
+    name: Run autotests
 
     steps:
             
