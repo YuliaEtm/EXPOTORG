@@ -194,3 +194,8 @@ def test_post_greate_mat_texture(num):
 
         response2 = get_by_ext_num(payload_texture["ext_num"])
         assert response2.status_code == 400, 'материал не удален'
+
+
+@allure.description("Создаем новый простой ")
+def test_prosto():
+    assert 1 == 1
